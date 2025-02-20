@@ -40,5 +40,10 @@
         Downloads allowed?
     </mat-checkbox>
 
-
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Description" formControlName="longDescription"
+            cdkTextareaAutosize cdkAutosizeMaxRows="5" cdkAutosizeMinRows="2">
+        </textarea>
+    </mat-form-field>
 </div>

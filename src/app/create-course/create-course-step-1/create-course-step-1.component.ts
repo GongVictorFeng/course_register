@@ -9,6 +9,8 @@ import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/mate
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 
+const SAMPLE_TEXT = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores amet ab hic, cum exercitationem natus perspiciatis voluptatibus quae! Optio amet vel quibusdam, ratione perferendis laboriosam inventore! Tenetur beatae ducimus reiciendis hic, obcaecati dolore quasi alias, necessitatibus dicta tempore suscipit culpa officia ullam amet autem voluptatum! Eum itaque quas consequatur accusantium."
+
 @Component({
   selector: 'create-course-step-1',
   imports: [
@@ -42,7 +44,7 @@ export class CreateCourseStep1Component implements OnInit {
       category: [, Validators.required],
       courseType: ['premium', Validators.required],
       downloadsAllowed: [false, Validators.requiredTrue],
-      longDescription: ['', [Validators.required, Validators.minLength(3)]]
+      longDescription: [SAMPLE_TEXT, [Validators.required, Validators.minLength(3)]]
     })
   }
 

@@ -7,6 +7,7 @@ import { MatRadioModule} from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'create-course-step-1',
@@ -18,7 +19,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatRadioModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   templateUrl: './create-course-step-1.component.html',
   styleUrl: './create-course-step-1.component.scss'

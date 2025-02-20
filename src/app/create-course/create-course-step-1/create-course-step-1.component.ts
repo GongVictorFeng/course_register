@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {  MatInputModule } from "@angular/material/input";
 import { MatRadioModule} from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
@@ -42,6 +42,16 @@ export class CreateCourseStep1Component implements OnInit {
       downloadsAllowed: [false, Validators.requiredTrue],
       longDescription: ['', [Validators.required, Validators.minLength(3)]]
     })
+  }
+
+  colorFirstDate: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    const date = cellDate.getDate();
+
+    if (view == 'month') {
+      return (date == 1) ? 'highlight-date' : ""
+    }
+
+    return "";
   }
 
   get courseTitle() {

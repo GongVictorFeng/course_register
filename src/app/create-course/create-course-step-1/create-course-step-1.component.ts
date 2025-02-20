@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {  MatInputModule } from "@angular/material/input";
 import { MatRadioModule} from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'create-course-step-1',
@@ -14,7 +16,9 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     CommonModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './create-course-step-1.component.html',
   styleUrl: './create-course-step-1.component.scss'
@@ -33,7 +37,7 @@ export class CreateCourseStep1Component implements OnInit {
         Validators.maxLength(60)
       ]],
       releaseAt: [new Date(), Validators.required],
-      category: ['BEGINNER', Validators.required],
+      category: [, Validators.required],
       courseType: ['premium', Validators.required],
       downloadsAllowed: [false, Validators.requiredTrue],
       longDescription: ['', [Validators.required, Validators.minLength(3)]]

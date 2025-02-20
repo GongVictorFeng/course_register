@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {  MatInputModule } from "@angular/material/input";
+import { MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'create-course-step-1',
@@ -10,7 +11,8 @@ import {  MatInputModule } from "@angular/material/input";
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatRadioModule
   ],
   templateUrl: './create-course-step-1.component.html',
   styleUrl: './create-course-step-1.component.scss'

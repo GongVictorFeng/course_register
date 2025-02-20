@@ -19,5 +19,14 @@
         <mat-radio-button value="free">Free</mat-radio-button>
         <mat-radio-button value="premium">Premium</mat-radio-button>
     </mat-radio-group>
-    
+
+    <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category" placeholder="Select category">
+            <mat-option value="beginner">Beginner</mat-option>
+            <mat-option value="intermediate">Intermediate</mat-option>
+            <mat-option value="advanced">Advanced</mat-option>
+        </mat-select>
+    </mat-form-field>
+
 </div>

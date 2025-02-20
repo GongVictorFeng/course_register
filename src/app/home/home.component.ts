@@ -7,6 +7,7 @@ import { map, Observable } from 'rxjs';
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
         MatButtonModule,
         MatTabsModule,
         CommonModule,
-        CoursesCardListComponent
+        CoursesCardListComponent,
+        RouterModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

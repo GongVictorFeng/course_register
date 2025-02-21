@@ -20,4 +20,20 @@
       background: whitesmoke;
       cursor: pointer;
     }
-  }
+}
+
+.mat-column-duration {
+    font-style: italic;
+}
+
+.mat-column-description {
+    padding-left:20px;
+    text-align: left;
+}
+
+.mat-column-seqNo {
+    width: 32px;
+    border-right: 1px solid black;
+    padding-right: 24px;
+    text-align: center;
+}

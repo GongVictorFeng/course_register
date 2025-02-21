@@ -1,0 +1,23 @@
+.course {
+    text-align: center;
+    margin: 40px auto;
+    width: 390px;
+}
+
+.course-thumbnail {
+    width: 150px;
+    margin: 20px auto 0 auto;
+    display: block;
+}
+
+.lessons-table {
+    min-height: 360px;
+    margin-top: 10px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    tr:hover {
+      background: whitesmoke;
+      cursor: pointer;
+    }
+  }

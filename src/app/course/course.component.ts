@@ -40,6 +40,8 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['seqNo', "description", "duration"];
 
+  expandedLesson?: Lesson;
+
   ngOnInit(): void {
     this.course = this.route.snapshot.data["course"];
     this.loadLessonsPage()
@@ -60,6 +62,16 @@ export class CourseComponent implements OnInit, AfterViewInit {
           next: lessons => this.lessons = lessons,
           error: err => alert("Error loading lessons")    
         });
+  }
+
+  onToggleLesson(lesson: Lesson) {
+
+    if (lesson == this.expandedLesson) {
+      this.expandedLesson = undefined;
+      return;
+    }
+
+    this.expandedLesson = lesson;
   }
 
   ngAfterViewInit(): void {

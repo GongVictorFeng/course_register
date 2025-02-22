@@ -38,6 +38,10 @@ mat-paginator {
     }
 }
 
+.collapsed-detail {
+    display: none;
+}
+
 .mat-column-duration {
     font-style: italic;
 }
@@ -51,5 +55,9 @@ mat-paginator {
     width: 32px;
     border-right: 1px solid black;
     padding-right: 24px;
+    text-align: center;
+}
+
+.mat-column-expandedDetail {
     text-align: center;
 }

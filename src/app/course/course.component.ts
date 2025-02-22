@@ -6,8 +6,9 @@ import {  MatTableModule } from "@angular/material/table";
 import { Lesson } from '../model/lesson';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
-import { finalize } from 'rxjs';
+import { finalize, merge } from 'rxjs';
 import {  MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatSort, MatSortModule } from "@angular/material/sort";
 
 @Component({
   selector: 'app-course',
@@ -15,7 +16,8 @@ import {  MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
     MatTableModule,
     MatProgressSpinnerModule,
     CommonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   templateUrl: './course.component.html',
   styleUrl: './course.component.scss'
@@ -31,6 +33,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
+  @ViewChild(MatSort)
+  sort!: MatSort;
+
   constructor(private route: ActivatedRoute, private coursesService: CoursesService) {}
 
   displayedColumns = ['seqNo', "description", "duration"];
@@ -44,9 +49,10 @@ export class CourseComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.coursesService.findLessons(
         this.course.id, 
-        'asc', 
+        this.sort?.direction ?? "asc", 
         this.paginator?.pageIndex ?? 0,
-        this.paginator?.pageSize ?? 3)
+        this.paginator?.pageSize ?? 3,
+        this.sort?.active ?? "seqNo")
         .pipe(
           finalize(() => this.loading = false)
         )
@@ -57,7 +63,12 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.paginator.page.subscribe({
+    
+    this.sort.sortChange.subscribe({
+      next: () => this.paginator.pageIndex = 0
+    });
+
+    merge(this.sort.sortChange, this.paginator.page).subscribe({
       next: () => this.loadLessonsPage()
     })
   }

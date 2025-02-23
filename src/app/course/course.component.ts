@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { finalize, merge } from 'rxjs';
 import {  MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule } from "@angular/material/sort";
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-course',
@@ -17,7 +19,8 @@ import { MatSort, MatSortModule } from "@angular/material/sort";
     MatProgressSpinnerModule,
     CommonModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ],
   templateUrl: './course.component.html',
   styleUrl: './course.component.scss'
@@ -36,15 +39,34 @@ export class CourseComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
+  selection = new SelectionModel<Lesson> (true, []);
+
   constructor(private route: ActivatedRoute, private coursesService: CoursesService) {}
 
-  displayedColumns = ['seqNo', "description", "duration"];
+  displayedColumns = ['select', 'seqNo', "description", "duration"];
 
   expandedLesson?: Lesson;
 
   ngOnInit(): void {
     this.course = this.route.snapshot.data["course"];
     this.loadLessonsPage()
+  }
+
+  onLessonToggles(lesson: Lesson) {
+    this.selection.toggle(lesson);
+    console.log(this.selection.selected)
+  }
+
+  isAllSelected() {
+    return this.selection.selected.length == this.lessons.length;
+  }
+
+  toggleAll() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.lessons)
   }
 
   loadLessonsPage() {
@@ -59,8 +81,11 @@ export class CourseComponent implements OnInit, AfterViewInit {
           finalize(() => this.loading = false)
         )
         .subscribe({
-          next: lessons => this.lessons = lessons,
-          error: err => alert("Error loading lessons")    
+          next: lessons => {
+            this.lessons = lessons;
+            this.selection.clear();
+          },
+          error: () => alert("Error loading lessons")    
         });
   }
 

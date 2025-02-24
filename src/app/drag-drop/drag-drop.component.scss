@@ -37,3 +37,9 @@
 .done {
     margin-left: 30px;
 }
+
+.spinner-container mat-spinner {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+}

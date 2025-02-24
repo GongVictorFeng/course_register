@@ -1,4 +1,8 @@
 <div class="drag-drop-container" cdkDropListGroup>
+
+    <div class="spinner-container" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+    </div>
     
     <div class="pending">
         <h3>Lessons To Watch:</h3>

@@ -6,8 +6,7 @@
     font-family: "Roboto";
     display: flex;
     margin-top: 50px;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 .lessons-list {
@@ -33,4 +32,8 @@
     cursor: move;
     background: white;
     font-size: 14px;
-  }
+}
+
+.done {
+    margin-left: 30px;
+}

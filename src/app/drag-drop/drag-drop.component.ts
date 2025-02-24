@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Lesson } from '../model/lesson';
 
 @Component({
@@ -14,7 +14,7 @@ import { Lesson } from '../model/lesson';
 })
 export class DragDropComponent {
 
-  lessons = [
+  lessons: Lesson[] = [
     {
       id: 120,
       'description': 'Introduction to Angular Material',
@@ -93,12 +93,27 @@ export class DragDropComponent {
       courseId: 11
     }
   ];
+  done: Lesson[] =[];
+
+  dropMultiList(event: CdkDragDrop<Lesson[]>) {
+
+    if (event.previousContainer == event.container) {
+      moveItemInArray(this.lessons, event.previousIndex, event.currentIndex);
+      return;
+    }
+
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    )
+  }
 
   drop(event: CdkDragDrop<Lesson>) {
     console.log("previous index:" + event.previousIndex)
     console.log("current index:" + event.currentIndex)
 
-    moveItemInArray(this.lessons, event.previousIndex, event.currentIndex)
   }
 
 }

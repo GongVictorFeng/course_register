@@ -2,8 +2,12 @@ import * as express from 'express';
 import { Application } from "express";
 import { getAllCourses, getCourseById } from "./get-courses.route";
 import { searchLessons } from './search-lessons.route';
+import * as path from 'path';
 
 const app: Application = express();
+
+// Serve static files from the dist directory
+app.use(express.static(path.join(__dirname, '../dist/course-registration/browser')));
 
 app.route('/api/courses').get(getAllCourses);
 app.route('/api/courses/:id').get(getCourseById);

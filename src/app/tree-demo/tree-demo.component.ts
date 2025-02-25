@@ -1,3 +1,4 @@
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,6 +65,7 @@ const TREE_DATA: CourseNode[] = [
 })
 export class TreeDemoComponent implements OnInit{
 
+  // Nested Tree
   nestedDataSource = new MatTreeNestedDataSource<CourseNode>();
   childrenAccessor = (node: CourseNode) => node.children ?? [];
 

@@ -5,6 +5,7 @@ import { CourseComponent } from './course/course.component';
 import { courseResolver } from './services/course.resolver';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 import { TreeDemoComponent } from './tree-demo/tree-demo.component';
+import { VirtualScrollingComponent } from './virtual-scrolling/virtual-scrolling.component';
 
 export const routes: Routes = [
     {
@@ -22,7 +23,11 @@ export const routes: Routes = [
     {
         path: "tree-demo",
         component: TreeDemoComponent
-      },
+    },
+    {
+        path: 'virtual-scrolling',
+        component: VirtualScrollingComponent
+    },
     {
         path: 'courses/:id',
         component: CourseComponent,

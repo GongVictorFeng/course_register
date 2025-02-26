@@ -9,6 +9,7 @@ import { CoursesService } from '../services/courses.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatIconModule,
         MatButtonModule,
         MatTabsModule,
+        MatProgressSpinnerModule,
         CommonModule,
         MatTooltipModule,
         CoursesCardListComponent,

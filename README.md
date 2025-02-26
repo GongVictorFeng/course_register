@@ -54,7 +54,7 @@ this section is to showcase the components that I used in this project:
 ![alt text](src/assets/stepper_input_radio_selectBox_datePicker_checkBox_textArea.png)
 
 ## tooltip
-![alt text](src/assets/tab_and_card.png)
+![alt text](src/assets/tooltip.png)
 
 ## data table, spinner, paginator, sorting, multi-template data rows, expandable rows, data table selection, sticky header
 ![alt text](src/assets/data_table.png)

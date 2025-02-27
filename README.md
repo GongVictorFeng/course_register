@@ -59,6 +59,9 @@ this section is to showcase the components that I used in this project:
 ## data table, spinner, paginator, sorting, multi-template data rows, expandable rows, data table selection, sticky header
 ![alt text](src/assets/data_table.png)
 
+## dialog
+![alt text](src/assets/dialog.png)
+
 ## drap and drop
 ![alt text](src/assets/drag_and_drop.png)
 

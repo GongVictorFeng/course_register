@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CoursesCardListComponent } from '../courses-card-list/courses-card-list.component';
 import { finalize, map, Observable } from 'rxjs';
-import { Course } from '../model/course';
+import { Course, sortCoursesBySeqNo } from '../model/course';
 import { CoursesService } from '../services/courses.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -36,7 +36,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    const courses$ = this.coursesService.findAllCourses();
+    const courses$ = this.coursesService.findAllCourses().pipe(
+      map(courses => courses.sort(sortCoursesBySeqNo))
+    );
 
     this.beginnerCourses$ = courses$.pipe(
       map(courses => (courses ? courses.filter(course => course.category === 'BEGINNER') : [])),
@@ -45,3 +47,4 @@ export class HomeComponent implements OnInit {
     this.advancedCourses$ = courses$.pipe(map(courses => (courses ? courses.filter(course => course.category === 'ADVANCED') : [])));
   }
 }
+

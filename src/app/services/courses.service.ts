@@ -33,10 +33,10 @@ export class CoursesService {
     )
   }
 
-  findLessons(courseId: number, sortOrder = 'asc', pageNumber = 0, pageSize = 3, sortColumn = 'seqNo'): Observable<Lesson[]> {
+  findLessons(courseId: string, sortOrder = 'asc', pageNumber = 0, pageSize = 3, sortColumn = 'seqNo'): Observable<Lesson[]> {
     return this.http.get< {payload: Lesson[]} >(`${this.baseUrl}/api/lessons`, {
       params: new HttpParams()
-        .set('courseId', courseId.toString())
+        .set('courseId', courseId)
         .set('sortOrder', sortOrder)
         .set('pageNumber', pageNumber.toString())
         .set('pageSize', pageSize.toString())

@@ -18,12 +18,18 @@ export class CoursesService {
     return this.http.get<Course>(`${this.baseUrl}/api/courses/${courseId}`)
   }
 
-  findAllCourses(): Observable<Course[]> {
+  loadAllCourses(): Observable<Course[]> {
     return this.http.get<{ payload: Course[] }>(`${this.baseUrl}/api/courses`)
       .pipe(
         map(res => res['payload']),
         shareReplay()
       );
+  }
+
+  saveCourse(courseId: string, changes: Partial<Course>): Observable<Course> {
+    console.log(changes);
+    return this.http.put<Course>(`${this.baseUrl}/api/courses/${courseId}`, changes)
+      .pipe(shareReplay());
   }
 
   findAllCourseLessons(courseId: number): Observable<Lesson[]> {

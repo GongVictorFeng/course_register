@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { Course } from '../model/course';
 import { Lesson } from '../model/lesson';
 import { environment } from '../../environments/environment';
@@ -19,7 +19,11 @@ export class CoursesService {
   }
 
   findAllCourses(): Observable<Course[]> {
-    return this.http.get<{ payload: Course[] }>(`${this.baseUrl}/api/courses`).pipe(map(res => res['payload']));
+    return this.http.get<{ payload: Course[] }>(`${this.baseUrl}/api/courses`)
+      .pipe(
+        map(res => res['payload']),
+        shareReplay()
+      );
   }
 
   findAllCourseLessons(courseId: number): Observable<Lesson[]> {

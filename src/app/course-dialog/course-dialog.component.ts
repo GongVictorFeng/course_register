@@ -49,7 +49,7 @@ export class CourseDialogComponent implements OnInit {
   }
 
   save() {
-    this.dialogRef.close(this.form.value )
+    this.dialogRef.close(this.form.value as Partial<Course>);
   }
 
 }

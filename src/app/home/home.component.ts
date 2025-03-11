@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CoursesCardListComponent } from '../courses-card-list/courses-card-list.component';
+import { CoursesCardListComponent, CourseUpdateEvent } from '../courses-card-list/courses-card-list.component';
 import { finalize, map, Observable } from 'rxjs';
 import { Course, sortCoursesBySeqNo } from '../model/course';
 import { CoursesService } from '../services/courses.service';
@@ -30,21 +30,26 @@ export class HomeComponent implements OnInit {
 
   beginnerCourses$!: Observable<Course[]>;
   advancedCourses$!: Observable<Course[]>;
-  isLoading = false;
 
   constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
-    const courses$ = this.coursesService.findAllCourses().pipe(
+    this.reloadCourses();
+  }
+
+  reloadCourses() {
+    const courses$ = this.coursesService.loadAllCourses().pipe(
       map(courses => courses.sort(sortCoursesBySeqNo))
     );
 
-    this.beginnerCourses$ = courses$.pipe(
-      map(courses => (courses ? courses.filter(course => course.category === 'BEGINNER') : [])),
-      finalize(() => this.isLoading = false)
+    this.beginnerCourses$ = courses$.pipe(map(courses => (courses.filter(course => course.category === 'BEGINNER'))));
+    this.advancedCourses$ = courses$.pipe(map(courses => (courses.filter(course => course.category === 'ADVANCED'))));
+  }
+
+  saveCourse(courseUpdated: CourseUpdateEvent) {
+    this.coursesService.saveCourse(courseUpdated.courseId, courseUpdated.changes).subscribe(
+      () => this.reloadCourses()
     );
-    this.advancedCourses$ = courses$.pipe(map(courses => (courses ? courses.filter(course => course.category === 'ADVANCED') : [])));
   }
 }
 

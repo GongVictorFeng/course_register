@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Course } from '../model/course';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ export class CoursesCardListComponent implements OnInit{
 
 
   @Input() courses!: Course[] | null;
+  @Output() courseChanged: EventEmitter<CourseUpdateEvent> = new EventEmitter();
 
   cols = 3;
   rowHeight = '500px';
@@ -70,7 +71,15 @@ export class CoursesCardListComponent implements OnInit{
       .pipe(
         filter(value => !!value)
       ).subscribe(
-        value => console.log(value)
+        value => {
+          console.log(value);
+          this.courseChanged.emit({courseId: course.id, changes: value});
+        } 
       )
   }
+}
+
+export interface CourseUpdateEvent {
+  courseId: string;
+  changes: Partial<Course>;
 }

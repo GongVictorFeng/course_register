@@ -6,11 +6,13 @@ import {  MatTableModule } from "@angular/material/table";
 import { Lesson } from '../model/lesson';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
-import { finalize, merge } from 'rxjs';
+import { merge } from 'rxjs';
 import {  MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule} from '@angular/material/checkbox';
+import { LoadingComponent } from "../loading/loading.component";
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
   selector: 'app-course',
@@ -20,8 +22,9 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
     CommonModule,
     MatPaginatorModule,
     MatSortModule,
-    MatCheckboxModule
-  ],
+    MatCheckboxModule,
+    LoadingComponent
+],
   templateUrl: './course.component.html',
   styleUrl: './course.component.scss'
 })
@@ -31,8 +34,6 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
   lessons: Lesson[] = [];
 
-  loading: boolean = false;
-
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
@@ -41,7 +42,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
   selection = new SelectionModel<Lesson> (true, []);
 
-  constructor(private route: ActivatedRoute, private coursesService: CoursesService) {}
+  constructor(private route: ActivatedRoute, private coursesService: CoursesService, private loadingService: LoadingService) {}
 
   displayedColumns = ['select', 'seqNo', "description", "duration"];
 
@@ -70,23 +71,21 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   loadLessonsPage() {
-    this.loading = true;
-    this.coursesService.findLessons(
-        this.course.id, 
-        this.sort?.direction ?? "asc", 
-        this.paginator?.pageIndex ?? 0,
-        this.paginator?.pageSize ?? 3,
-        this.sort?.active ?? "seqNo")
-        .pipe(
-          finalize(() => this.loading = false)
-        )
-        .subscribe({
+    const lessons$ = this.coursesService.findLessons(
+      this.course.id, 
+      this.sort?.direction ?? "asc", 
+      this.paginator?.pageIndex ?? 0,
+      this.paginator?.pageSize ?? 3,
+      this.sort?.active ?? "seqNo");
+
+    const loadingLessons$ = this.loadingService.showLoaderUntilCompleted(lessons$);
+    loadingLessons$.subscribe({
           next: lessons => {
             this.lessons = lessons;
             this.selection.clear();
           },
-          error: () => alert("Error loading lessons")    
-        });
+          error: () => alert("Error loading lessons")  
+    })
   }
 
   onToggleLesson(lesson: Lesson) {

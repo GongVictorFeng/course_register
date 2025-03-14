@@ -22,5 +22,5 @@ export function saveCourse(req: Request, res: Response) {
 
    setTimeout(() => {
     res.status(200).json(COURSES[courseId])
-   })
+   }, 1500)
 }

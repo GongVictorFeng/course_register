@@ -11,6 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { LoadingService } from '../loading/loading.service';
 import { LoadingComponent } from "../loading/loading.component";
 import { CoursesService } from '../services/courses.service';
+import { MessagesService } from '../messages/messages.service';
+import { MessagesComponent } from "../messages/messages.component";
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'course-dialog',
@@ -22,10 +25,11 @@ import { CoursesService } from '../services/courses.service';
     MatDatepickerModule,
     MatButtonModule,
     ReactiveFormsModule,
-    LoadingComponent
+    LoadingComponent,
+    MessagesComponent
 ],
   templateUrl: './course-dialog.component.html',
-  providers: [provideNativeDateAdapter(), LoadingService],
+  providers: [provideNativeDateAdapter(), LoadingService, MessagesService],
   styleUrl: './course-dialog.component.scss'
 })
 export class CourseDialogComponent implements OnInit {
@@ -37,7 +41,8 @@ export class CourseDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) private course: Course,
               private dialogRef: MatDialogRef<CourseDialogComponent>,
               private loadingService: LoadingService,
-              private coursesService: CoursesService) {}
+              private coursesService: CoursesService,
+              private messagesService: MessagesService) {}
 
   ngOnInit(): void {
     this.description = this.course.description;
@@ -56,7 +61,15 @@ export class CourseDialogComponent implements OnInit {
 
   save() {
     const changes = this.form.value;
-    const saveCourse$ = this.coursesService.saveCourse(this.course.id, changes);
+    const saveCourse$ = this.coursesService.saveCourse(this.course.id, changes)
+      .pipe(
+        catchError(err => {
+          const message = "could not save the course";
+          this.messagesService.showErrors(message);
+          console.log(message, err);
+          return throwError(() => err);
+        })
+      );
     this.loadingService.showLoaderUntilCompleted(saveCourse$).subscribe(
       val => this.dialogRef.close(val)
     )

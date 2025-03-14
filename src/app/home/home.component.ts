@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CoursesCardListComponent, CourseUpdateEvent } from '../courses-card-list/courses-card-list.component';
-import { finalize, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Course, sortCoursesBySeqNo } from '../model/course';
 import { CoursesService } from '../services/courses.service';
 import { CommonModule } from '@angular/common';
@@ -46,12 +46,6 @@ export class HomeComponent implements OnInit {
 
     this.beginnerCourses$ = loadCourse$.pipe(map(courses => (courses.filter(course => course.category === 'BEGINNER'))));
     this.advancedCourses$ = loadCourse$.pipe(map(courses => (courses.filter(course => course.category === 'ADVANCED'))));
-  }
-
-  saveCourse(courseUpdated: CourseUpdateEvent) {
-    this.coursesService.saveCourse(courseUpdated.courseId, courseUpdated.changes).subscribe(
-      () => this.reloadCourses()
-    );
   }
 }
 

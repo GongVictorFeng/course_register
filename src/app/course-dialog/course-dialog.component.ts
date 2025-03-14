@@ -8,6 +8,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { Course } from '../model/course';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { LoadingService } from '../loading/loading.service';
+import { LoadingComponent } from "../loading/loading.component";
+import { CoursesService } from '../services/courses.service';
 
 @Component({
   selector: 'course-dialog',
@@ -19,9 +22,10 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatButtonModule,
     ReactiveFormsModule,
-  ],
+    LoadingComponent
+],
   templateUrl: './course-dialog.component.html',
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), LoadingService],
   styleUrl: './course-dialog.component.scss'
 })
 export class CourseDialogComponent implements OnInit {
@@ -31,7 +35,9 @@ export class CourseDialogComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) private course: Course,
-              private dialogRef: MatDialogRef<CourseDialogComponent>) {}
+              private dialogRef: MatDialogRef<CourseDialogComponent>,
+              private loadingService: LoadingService,
+              private coursesService: CoursesService) {}
 
   ngOnInit(): void {
     this.description = this.course.description;
@@ -49,7 +55,11 @@ export class CourseDialogComponent implements OnInit {
   }
 
   save() {
-    this.dialogRef.close(this.form.value as Partial<Course>);
+    const changes = this.form.value;
+    const saveCourse$ = this.coursesService.saveCourse(this.course.id, changes);
+    this.loadingService.showLoaderUntilCompleted(saveCourse$).subscribe(
+      val => this.dialogRef.close(val)
+    )
   }
 
 }

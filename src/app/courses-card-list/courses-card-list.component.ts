@@ -26,7 +26,7 @@ export class CoursesCardListComponent implements OnInit{
 
 
   @Input() courses!: Course[] | null;
-  @Output() courseChanged: EventEmitter<CourseUpdateEvent> = new EventEmitter();
+  @Output() courseChanged = new EventEmitter();
 
   cols = 3;
   rowHeight = '500px';
@@ -73,13 +73,8 @@ export class CoursesCardListComponent implements OnInit{
       ).subscribe(
         value => {
           console.log(value);
-          this.courseChanged.emit({courseId: course.id, changes: value});
+          this.courseChanged.emit();
         } 
       )
   }
-}
-
-export interface CourseUpdateEvent {
-  courseId: string;
-  changes: Partial<Course>;
 }

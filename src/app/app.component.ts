@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { LoadingComponent } from "./loading/loading.component";
 import { LoadingService } from './loading/loading.service';
+import { MessagesComponent } from './messages/messages.component';
+import { MessagesService } from './messages/messages.service';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +24,13 @@ import { LoadingService } from './loading/loading.service';
     MatButtonModule,
     MatMenuModule,
     RouterModule,
-    LoadingComponent
+    LoadingComponent,
+    MessagesComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [
-    LoadingService
+    LoadingService, MessagesService
   ]
 })
 export class AppComponent {

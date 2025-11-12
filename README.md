@@ -3,7 +3,7 @@ A web application for course registration, I created it to explore the Angular M
 
 I have already deployed this app on Firebase, will add more features in the future, because it can be easily extented to a full stack application.
 
-Check the link to explore the Angular Material components: https://course-register-e5ab4.web.app
+Check the link to explore the Angular Material components: https://course-register-e5ab4.web.app    it takes some time to load data, since I use a free service for the server side programing, so be patient for the initialization. 
 
 # Installation pre-requisites
 
